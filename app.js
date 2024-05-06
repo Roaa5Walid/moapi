@@ -82,7 +82,7 @@ const mc = mysql.createPool({
 */
 
 
-
+/*
 //connecting to database 
 const mc = mysql.createPool({
     host: 'localhost',
@@ -91,14 +91,25 @@ const mc = mysql.createPool({
     database: 'mo',
     multipleStatements: true
 });
+*/
 
-
+///
+//connecting to database 
+const mc = mysql.createPool({
+    host: 'bfcq3vlnu5jqg1rsbl2l-mysql.services.clever-cloud.com',
+    user: 'uxqpdvz4vhlnscho',
+    password: 'uxqpdvz4vhlnscho',
+    database: 'bfcq3vlnu5jqg1rsbl2l',
+    multipleStatements: true
+});
 
 // open broswer on this -> "localhost:4000/" // 81.16.28.103:4000
 
 var port = process.env.PORT || 4000
 console.log("Running on port:" + port)
 app.listen(port)
+
+
 
 /*
 var port = process.env.PORT || 4000
@@ -142,7 +153,7 @@ app.get('/orders', (request, response) => {
     });
   });
 
-  app.delete('/orders/:orderId', (request, response) => {
+  app.delete('/ordersde/:orderId', (request, response) => {
     const orderId = request.params.orderId;
     
     // قم بتحويل orderId إلى رقم صحيح
@@ -159,7 +170,7 @@ app.get('/orders', (request, response) => {
       response.send(`تم حذف الطلب ${id} بنجاح`);
     });
   });
-  app.delete('/Manager/:orderId', (request, response) => {
+  app.delete('/Managerde/:orderId', (request, response) => {
     const orderId = request.params.orderId;
     
     // قم بتحويل orderId إلى رقم صحيح
@@ -176,78 +187,125 @@ app.get('/orders', (request, response) => {
       response.send(`تم حذف الطلب ${id} بنجاح`);
     });
   });
-  /*
- ////////////////
-  app.delete('/orders/:orderId', (request, response) => {
-    const orderId = request.params.orderId;
-  
-    // قم بتحديث حالة الطلب المحدد إلى "محذوف" في قاعدة البيانات
-    let updateQuery = `UPDATE orders SET status = "محذوف" WHERE id = ${orderId}`;
-    mc.query(updateQuery, (err, result) => {
-      if (err) {
-        console.log('حدث خطأ أثناء تحديث حالة الطلب');
-        throw err;
-      }
-      console.log(`done${orderId}`);
-      response.send(`تم حذف الطلب ${orderId} بنجاح`);
-    });
-  });
- ///////////////
-
-   app.put('/orders/:orderId', (req, res) => {
-    const id = req.params.id;
-    const updatedStatus = req.body.status;
-
-    const updateQuery = `UPDATE orders SET status = "محذوف" WHERE id = ?`;
-    mc.query(updateQuery, [updatedStatus, id], (err, result) => {
-        if (err) {
-            console.log('حدث خطأ أثناء تحديث حالة الطلب', err);
-            res.send({
-                "code": 404,
-                "MSG": "حدث خطأ أثناء تحديث حالة الطلب"
-            });
-        } else {
-            console.log(`تم تحديث حالة الطلب ${id} بنجاح`);
-            res.send({
-                "code": 200,
-                "success": `تم تحديث حالة الطلب ${id} بنجاح`
-            });
-        }
-    });
-});
-  */
 /*
+  app.put('/update/:orderId', function (req, res) {
+    const orderId = req.params.orderId;
+    const id = parseInt(orderId);
 
-app.get('/orders', (request, response) => {
-    mc.query(`SELECT * FROM orders ` , function (error, results, fields) {
-        if (error) throw error;
-        return response.send(results);
+    var updatedData = {
+   "tablenumber":req.body.tablenumber,
+   "tea":req.body.tea,
+   "hamed":req.body.hamed,
+   "teaAndmilk":req.body.teaAndmilk,
+   "nescafe":req.body.nescafe,
+   "cappuccino":req.body.cappuccino,
+   "cacau":req.body.cacau,
+   "milk":req.body.milk,
+   "nestle":req.body.nestle,
+   "hotChocolate":req.body.hotChocolate,
+   "cofee":req.body.cofee,
+   "lableby":req.body.lableby	,
+   "baklaa":req.body.baklaa,
+   "banana":req.body.banana,
+   "bananaAndMilk":req.body.bananaAndMilk,
+   "bananaAnd":req.body.bananaAnd,
+   "bananaAndStrawberry":req.body.bananaAndStrawberry,
+   "orangeAndLemon":req.body.orangeAndLemon,
+   "orange":req.body.orange,
+   "lemon":req.body.lemon,
+   "strawberry":req.body.strawberry,
+   "watermelon":req.body.watermelon,
+   "pepsi":req.body.pepsi,
+   "miranda":req.body.miranda,
+   "seven":req.body.seven	,
+   "tiger":req.body.tiger,
+   "mikiki":req.body.mikiki,
+   "cocktail":req.body.cocktail	,
+   "water":req.body.water,
+   "arkela":req.body.arkela,
+   "status":"طلب",
+   "price":req.body.price,
+   
+    };
+
+    console.log("Data to update:", updatedData); // للتأكيد على البيانات المرسلة للتحديث
+
+    let updateQuery = `UPDATE orders SET ? WHERE id = ?`;
+
+    mc.query(updateQuery, [updatedData, id], (err, result) => {
+        if (err) {
+            console.error('Error updating order:', err);
+            return res.status(500).send('Error updating order');
+        }
+        if (result.affectedRows === 0) {
+            // لا توجد صفوف تأثرت بالتحديث
+            console.log(`No rows updated for order ${id}`);
+            return res.status(404).send(`No order found with id ${id}`);
+        }
+        console.log(`Order ${id} updated successfully`);
+        res.send(`Order ${id} updated successfully`);
     });
+});
+*/
+app.put('/update/:orderId', function (req, res) {
+    const orderId = req.params.orderId;
+    const id = parseInt(orderId);
+    
+    var updatedData = {};
+    if (req.body.tablenumber) updatedData.tablenumber = req.body.tablenumber;
+    if (req.body.tea) updatedData.tea = req.body.tea;
+    if (req.body.hamed) updatedData.hamed = req.body.hamed;
+    if (req.body.teaAndmilk) updatedData.teaAndmilk = req.body.teaAndmilk;
+    if (req.body.nescafe) updatedData.nescafe = req.body.nescafe;
+    if (req.body.cappuccino) updatedData.cappuccino = req.body.cappuccino;
+    if (req.body.cacau) updatedData.cacau = req.body.cacau;
+    if (req.body.milk) updatedData.milk = req.body.milk;
+    if (req.body.nestle) updatedData.nestle = req.body.nestle;
+    if (req.body.hotChocolate) updatedData.hotChocolate = req.body.hotChocolate;
+    if (req.body.cofee) updatedData.cofee = req.body.cofee;
+    if (req.body.lableby) updatedData.lableby = req.body.lableby;
+    if (req.body.baklaa) updatedData.baklaa = req.body.baklaa;
+    if (req.body.banana) updatedData.banana = req.body.banana;
+    if (req.body.bananaAndMilk) updatedData.bananaAndMilk = req.body.bananaAndMilk;
+    if (req.body.bananaAnd) updatedData.bananaAnd = req.body.bananaAnd;
+    if (req.body.bananaAndStrawberry) updatedData.bananaAndStrawberry = req.body.bananaAndStrawberry;
+    if (req.body.orangeAndLemon) updatedData.orangeAndLemon = req.body.orangeAndLemon;
+    if (req.body.orange) updatedData.orange = req.body.orange;
+    if (req.body.lemon) updatedData.lemon = req.body.lemon;
+    if (req.body.strawberry) updatedData.strawberry = req.body.strawberry;
+    if (req.body.watermelon) updatedData.watermelon = req.body.watermelon;
+    if (req.body.pepsi) updatedData.pepsi = req.body.pepsi;
+    if (req.body.miranda) updatedData.miranda = req.body.miranda;
+    if (req.body.seven) updatedData.seven = req.body.seven;
+    if (req.body.tiger) updatedData.tiger = req.body.tiger;
+    if (req.body.mikiki) updatedData.mikiki = req.body.mikiki;
+    if (req.body.cocktail) updatedData.cocktail = req.body.cocktail;
+    if (req.body.water) updatedData.water = req.body.water;
+    if (req.body.arkela) updatedData.arkela = req.body.arkela;
+    if (req.body.price) updatedData.price = req.body.price;
+    updatedData.status = "طلب";
+
+    let updateQuery = `UPDATE orders SET ? WHERE id = ?`;
+
+    mc.query(updateQuery, [updatedData, id], (err, result) => {
+        if (err) {
+            console.error('حدث خطأ أثناء تحديث حالة الطلب:', err);
+            res.status(500).send('خطأ في تحديث الطلب');
+            return;
+        }
+        if (result.affectedRows === 0) {
+            console.log(`لا يوجد طلب بالمعرف ${id} لتحديثه أو البيانات المراد تغييرها متطابقة.`);
+            res.status(404).send(`لا يوجد طلب بالمعرف ${id} لتحديثه أو البيانات المراد تغييرها متطابقة.`);
+            return;
+        }
+        console.log(`تم تجديد الطلب ${id} بنجاح`);
+        res.send(`تم تجديد الطلب ${id} بنجاح`);
+    });
+     
 
 });
-//////////////
 
-app.get('/orders', (request, response) => {
-    mc.query(`SELECT * FROM orders`, function (error, results, fields) {
-      if (error) throw error;
-  
-      const orders = results.map((order) => {
-        const tea = order.tea ?? 0; // تعيين قيمة افتراضية إذا كانت القيمة فارغة
-        const coffee = order.coffee ?? 0; // تعيين قيمة افتراضية إذا كانت القيمة فارغة
-        const tableNumber = order.tableNumber ?? 0; // تعيين قيمة افتراضية إذا كانت القيمة فارغة
-  
-        return {
-          tea: tea,
-          coffee: coffee,
-          tableNumber: tableNumber,
-        };
-      });
-  
-      return response.send(orders);
-    });
-  });
-  */
-/// POST     orders
+
 
 app.post('/add', function (req, res) {
 
