@@ -98,7 +98,7 @@ const mc = mysql.createPool({
 const mc = mysql.createPool({
     host: 'bfcq3vlnu5jqg1rsbl2l-mysql.services.clever-cloud.com',
     user: 'uxqpdvz4vhlnscho',
-    password: 'uxqpdvz4vhlnscho',
+    password: 'wn01A8RyjOu4RXjOspTS',
     database: 'bfcq3vlnu5jqg1rsbl2l',
     multipleStatements: true
 });
