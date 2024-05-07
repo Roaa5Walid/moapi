@@ -419,7 +419,7 @@ mc.query('INSERT INTO daytota SET ?', data, function (error, results, fields) {
        if (error) throw error;
        res.send({
            "code": 200,
-           "success": "عاشت  ايدك"
+           "success": "عاشت ايدك"
        });
    }
 });
